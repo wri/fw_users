@@ -1,0 +1,32 @@
+services:
+  develop:
+    build: .
+    ports:
+      - "3000:3000"
+    container_name: fw-service-template # TODO: Update name in final service
+    environment:
+      PORT: 3000
+    volumes:
+      - ./app:/opt/fw-service-template/app # TODO: Update fw-service-template in final service
+      - ./config:/opt/fw-service-template/config # TODO: Update fw-service-template in final service
+      - ./nodemon.json:/opt/fw-service-template/nodemon.json # TODO: fw-service-template name in final service
+    command: yarn dev
+
+  test:
+    build: .
+    container_name: fw-service-template-test # TODO: Update name in final service
+    volumes:
+      - ./app:/opt/fw-service-template/app # TODO: Update fw-service-template in final service
+      - ./config:/opt/fw-service-template/config # TODO: Update fw-service-template in final service
+      - ./nodemon.json:/opt/fw-service-template/nodemon.json # TODO: Update fw-service-template in final service
+      - ./jest.config.js:/opt/fw-service-template/jest.config.js # TODO: Update fw-service-template in final service
+    command: yarn test
+
+  docs:
+    build: .
+    ports:
+      - "30000:30000"
+    container_name: fw-service-template-docs # TODO: Update name in final service
+    volumes:
+      - ./docs:/opt/fw-service-template/docs # TODO: Update fw-service-template in final service
+    command: yarn run docs -l 30000
