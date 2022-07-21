@@ -1,6 +1,6 @@
 variable "project_prefix" {
   type = string
-  default = "fw-users"  // TODO: update with project name
+  default = "fw_users"  // TODO: update with project name
 }
 
 variable "environment" {
