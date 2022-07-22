@@ -54,7 +54,7 @@ module "fargate_autoscaling" {
   project_prefix      = var.project_prefix
   path_pattern        = ["${var.healthcheck_path}", "/fw_users"] // TODO
   health_check_path = var.healthcheck_path
-  priority = 100 // TODO: must be unique for across all services
+  priority = 9 // TODO: must be unique for across all services
 }
 
 

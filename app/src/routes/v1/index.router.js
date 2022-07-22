@@ -1,3 +1,5 @@
+import TeamService from "../../services/teams.service";
+
 const logger = require("logger").default;
 const Router = require("koa-router");
 
@@ -7,7 +9,8 @@ const router = new Router({
 
 class UserRouter {
   static async delete(ctx) {
-    // something
+    // check that user isn't part of any teams.
+    if(await TeamService.checkUserAdmin) ctx.throw(400,"Cannot delete a team administrator. Please reassign all team administrators before deleting account.")
   }
 }
 
