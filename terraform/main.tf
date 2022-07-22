@@ -2,7 +2,7 @@
 terraform {
   backend "s3" {
     region  = "us-east-1"
-    key     = "wri__fw_service_template.tfstate"  // TODO: Update fw_service_template to be name of final service
+    key     = "wri__fw_users.tfstate"  // TODO: Update fw_service_template to be name of final service
     encrypt = true
   }
 }
@@ -52,7 +52,7 @@ module "fargate_autoscaling" {
   lb_target_group_arn = module.fargate_autoscaling.lb_target_group_arn
   listener_arn        = data.terraform_remote_state.fw_core.outputs.lb_listener_arn
   project_prefix      = var.project_prefix
-  path_pattern        = ["${var.healthcheck_path}", "/template*"] // TODO
+  path_pattern        = ["${var.healthcheck_path}", "/fw_users"] // TODO
   health_check_path = var.healthcheck_path
   priority = 100 // TODO: must be unique for across all services
 }
@@ -72,6 +72,9 @@ data "template_file" "container_definition" {
     db_secret_arn = data.terraform_remote_state.core.outputs.document_db_secrets_arn
     data_bucket = data.terraform_remote_state.fw_core.outputs.data_bucket
     redis_endpoint = data.terraform_remote_state.core.outputs.redis_replication_group_primary_endpoint_address
+    s3_bucket               = var.s3_bucket
+    s3_access_key_id        = var.s3_access_key_id
+    s3_secret_access_key    = var.s3_secret_access_key
   }
 
 }

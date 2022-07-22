@@ -1,6 +1,6 @@
 variable "project_prefix" {
   type = string
-  default = "fw-template"  // TODO: update with project name
+  default = "fw_users"  // TODO: update with project name
 }
 
 variable "environment" {
@@ -59,4 +59,14 @@ variable "healthcheck_path" {
 }
 variable "healthcheck_sns_emails" {
   type    = list(string)
+}
+variable "s3_bucket" {
+  type = string
+  default = "forest-watcher-files"
+}
+variable "s3_access_key_id" {
+  type = string
+}
+variable "s3_secret_access_key" {
+  type = string
 }
