@@ -13,7 +13,7 @@ lint:
 	docker-compose run develop yarn run lint
 
 logs:
-	docker logs -f fw-service-template # TODO: Update name in final service
+	docker logs -f fw-users # TODO: Update name in final service
 
 tests:
-	docker logs -f fw-service-template-test # TODO: Update name in final service
+	docker logs -f fw-users-test # TODO: Update name in final service

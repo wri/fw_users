@@ -1,7 +1,7 @@
 FROM node:16.14.2-alpine3.15
 MAINTAINER server@3sidedcube.com
 
-ENV NAME fw-service-template # TODO: Update name in final service
+ENV NAME fw-users # TODO: Update name in final service
 
 WORKDIR /opt/$NAME
 
