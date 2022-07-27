@@ -1,8 +1,7 @@
 {
-  "name": "fw_service_template",
+  "name": "fw_users",
   "version": "1.0.0",
   "main": "index.js",
-  "repository": "git@github.com:3sidedcube/fw_service_template.git",
   "author": "owenjs <owen.evans115@gmail.com>",
   "license": "MIT",
   "scripts": {
@@ -54,6 +53,6 @@
   },
   "prettier": "@3sidedcube/prettier-config",
   "engines": {
-    "node": "~16"
+    "node": "~14"
   }
 }
