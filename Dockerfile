@@ -1,4 +1,4 @@
-FROM node:16.14.2-alpine3.15
+FROM node:14
 MAINTAINER server@3sidedcube.com
 
 ENV NAME fw-users # TODO: Update name in final service
@@ -16,6 +16,6 @@ COPY ./.eslintrc.yml ./.eslintrc.yml
 COPY ./tsconfig.json ./
 RUN yarn build
 
-EXPOSE 3000
+EXPOSE 3001
 
 CMD ["node", "dist/app.js"]

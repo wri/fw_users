@@ -2,10 +2,10 @@ services:
   develop:
     build: .
     ports:
-      - "3000:3000"
+      - "3001:3001"
     container_name: fw-users # TODO: Update name in final service
     environment:
-      PORT: 3000
+      PORT: 3001
     volumes:
       - ./app:/opt/fw-users/app # TODO: Update fw-users in final service
       - ./config:/opt/fw-users/config # TODO: Update fw-users in final service
@@ -25,8 +25,8 @@ services:
   docs:
     build: .
     ports:
-      - "30000:30000"
+      - "30010:30010"
     container_name: fw-users-docs # TODO: Update name in final service
     volumes:
       - ./docs:/opt/fw-users/docs # TODO: Update fw-users in final service
-    command: yarn run docs -l 30000
+    command: yarn run docs -l 30010
