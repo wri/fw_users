@@ -1,7 +1,7 @@
 FROM node:14
 MAINTAINER server@3sidedcube.com
 
-ENV NAME fw-users # TODO: Update name in final service
+ENV NAME fw-users
 
 WORKDIR /opt/$NAME
 

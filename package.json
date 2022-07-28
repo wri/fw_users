@@ -2,7 +2,7 @@
   "name": "fw_users",
   "version": "1.0.0",
   "main": "index.js",
-  "author": "owenjs <owen.evans115@gmail.com>",
+  "author": "3SidedCube",
   "license": "MIT",
   "scripts": {
     "lint": "eslint app --fix",
@@ -14,9 +14,11 @@
     "docs": "serve docs"
   },
   "dependencies": {
+    "axios": "^0.27.2",
     "bunyan": "^1.8.15",
     "config": "^3.3.7",
     "koa": "^2.13.4",
+    "koa-body": "^5.0.0",
     "koa-mount": "^4.0.0",
     "koa-router": "^10.1.1",
     "koa-simple-healthcheck": "^0.0.1"
