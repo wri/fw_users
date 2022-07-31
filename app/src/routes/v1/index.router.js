@@ -1,5 +1,7 @@
 import TeamService from "../../services/teams.service";
 import AreaService from "../../services/areas.service";
+import ReportService from "../../services/reports.service";
+import LayerService from "../../services/layers.service";
 
 const logger = require("logger").default;
 const Router = require("koa-router");
@@ -23,7 +25,24 @@ class UserRouter {
     });
 
     // **** remove all reports and templates****
-    
+    // delete all user answers
+    await ReportService.deleteAllAnswersForUser();
+    // once answers are deleted, need to get all templates for user
+    const templates = await ReportService.getAllTemplates();
+    templates.forEach(template => {
+      if(!template.attributes.public) { // if the template isn't a public template
+        // check if template is used for any report answers
+        const answers = await ReportService.getTemplateAnswers(template.id);
+        if(answers.length === 0) { // delete template if not being used
+          ReportService.deleteTemplate(template.id);
+        }
+      }
+    });
+
+    // remove all user's layers
+    LayerService.deleteAllLayers();
+
+    // remove user from their teams (don't just leave team)
 
 
   }
