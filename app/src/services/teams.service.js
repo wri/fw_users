@@ -4,15 +4,12 @@ const logger = require("logger");
 const loggedInUserService = require("./LoggedInUserService");
 
 class TeamService {
-
   static async checkUserAdmin(userTeams) {
-
     let admin = false;
     userTeams.forEach(team => {
-      if(team.attributes.userRole === "administrator") admin = true;
+      if (team.attributes.userRole === "administrator") admin = true;
     });
     return admin;
-
   }
 
   static async getUserTeams(user) {
@@ -60,7 +57,7 @@ class TeamService {
     return teams.data;
   }
 
-  static async deleteTeamUserRelation({teamId, relationId}) {
+  static async deleteTeamUserRelation({ teamId, relationId }) {
     try {
       const baseURL = config.get("v3teamsAPI.url");
       const response = await axios.default({
@@ -71,7 +68,7 @@ class TeamService {
           authorization: loggedInUserService.token
         }
       });
-      logger.info("User removed from team with status",response.status);
+      logger.info("User removed from team with status", response.status);
     } catch (e) {
       logger.info("Failed to delete user from team");
     }

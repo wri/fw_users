@@ -4,9 +4,7 @@ const logger = require("logger");
 const loggedInUserService = require("./LoggedInUserService");
 
 class ReportService {
-
   static async deleteAllAnswersForUser() {
-
     try {
       const baseURL = config.get("formsAPI.url");
       const response = await axios.default({
@@ -25,7 +23,6 @@ class ReportService {
   }
 
   static async getAllTemplates() {
-
     try {
       const baseURL = config.get("formsAPI.url");
       const response = await axios.default({
@@ -36,16 +33,15 @@ class ReportService {
           authorization: loggedInUserService.token
         }
       });
-      const templates = response.data
-      logger.info(`Got templates ${templates}`)
-      return templates && templates.data
+      const templates = response.data;
+      logger.info(`Got templates ${templates}`);
+      return templates && templates.data;
     } catch (e) {
       logger.info("Failed to get templates");
     }
   }
 
   static async getTemplateAnswers(templateId) {
-
     try {
       const baseURL = config.get("formsAPI.url");
       const response = await axios.default({
@@ -56,16 +52,15 @@ class ReportService {
           authorization: loggedInUserService.token
         }
       });
-      const answers = response.data
-      logger.info(`Got template answers ${answers}`)
-      return answers && answers.data
+      const answers = response.data;
+      logger.info(`Got template answers ${answers}`);
+      return answers && answers.data;
     } catch (e) {
       logger.info("Failed to get answers");
     }
   }
 
   static async deleteTemplate(templateId) {
-
     try {
       const baseURL = config.get("formsAPI.url");
       const response = await axios.default({
@@ -76,7 +71,7 @@ class ReportService {
           authorization: loggedInUserService.token
         }
       });
-      logger.info(`Deleted template ${templateId} with status code ${response.status}`)
+      logger.info(`Deleted template ${templateId} with status code ${response.status}`);
       return Promise.resolve();
     } catch (e) {
       logger.info("Failed to get answers");

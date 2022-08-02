@@ -4,9 +4,7 @@ const logger = require("logger");
 const loggedInUserService = require("./LoggedInUserService");
 
 class LayerService {
-
   static async deleteAllLayers() {
-
     try {
       const baseURL = config.get("layersAPI.url");
       const response = await axios.default({

@@ -4,7 +4,6 @@ import axios from "axios";
 const loggedInUserService = require("./LoggedInUserService");
 
 class AreaService {
-
   static async getAreas() {
     logger.info(`Getting areas`);
     try {
@@ -38,7 +37,7 @@ class AreaService {
           authorization: loggedInUserService.token
         }
       });
-      logger.info("Deleted template relations for area", areaId);
+      logger.info(`Deleted template relations for area ${areaId} with status code ${response.statusCode}`);
       return Promise.resolve();
     } catch (e) {
       logger.error(`Error while deleting template relations for area ${areaId}`, e);
@@ -58,7 +57,7 @@ class AreaService {
           authorization: loggedInUserService.token
         }
       });
-      logger.info("Deleted team relations for area", areaId);
+      logger.info(`Deleted team relations for area ${areaId} with status code ${response.statusCode}`);
       return Promise.resolve();
     } catch (e) {
       logger.error(`Error while deleting team relations for area ${areaId}`, e);
