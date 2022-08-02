@@ -31,7 +31,7 @@ class UserRouter {
     // delete all user answers
     await ReportService.deleteAllAnswersForUser();
     // once answers are deleted, need to get all templates for user
-    templates.forEach(template => {
+    templates.forEach(async template => {
       if(!template.attributes.public) { // if the template isn't a public template
         // check if template is used for any report answers
         const answers = await ReportService.getTemplateAnswers(template.id);
