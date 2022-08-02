@@ -1,6 +1,6 @@
-import config from "config";
-import logger from "../logger";
-import axios from "axios";
+const config = require("config");
+const logger = require("../logger");
+const axios = require("axios");
 const loggedInUserService = require("./LoggedInUserService");
 
 class AreaService {

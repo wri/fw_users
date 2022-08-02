@@ -3,7 +3,9 @@
     "port": "3001"
   },
   "logger": {
-    "name": "fw-logger",
-    "level": "debug"
+    "name": "forest-watcher",
+    "level": "debug",
+    "toFile": false,
+    "dirLogFile": null
   }
 }

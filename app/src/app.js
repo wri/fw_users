@@ -1,8 +1,8 @@
-import Koa from "koa";
-import config from "config";
-import logger from "./logger";
-import loaderRoutes from "./loaderRoutes";
-import LoggedInUserService from "./services/LoggedInUserService";
+const Koa = require("koa");
+const config = require("config");
+const logger = require("./logger");
+const loader = require("./loader");
+const LoggedInUserService = require("./services/LoggedInUserService");
 
 const koaBody = require("koa-body")({
   multipart: true,
@@ -20,9 +20,9 @@ app.use(async (ctx, next) => {
   await next();
 });
 
-loaderRoutes(app);
+loader.loadRoutes(app);
 
 const port = config.get("service.port");
 const server = app.listen(port, () => logger.debug("Listening on PORT: %s", port));
 
-export default server;
+module.exports = server;

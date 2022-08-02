@@ -15,7 +15,7 @@ class TeamService {
   static async getUserTeams(user) {
     let teams = [];
     try {
-      const baseURL = config.get("v3teamsAPI.url");
+      const baseURL = config.get("teamsAPI.url");
       const response = await axios.default({
         baseURL,
         url: `/teams/user/${user.toString()}`,
@@ -38,7 +38,7 @@ class TeamService {
     let teams = [];
 
     try {
-      const baseURL = config.get("v3teamsAPI.url");
+      const baseURL = config.get("teamsAPI.url");
       const response = await axios.default({
         baseURL,
         url: `/teams/${teamId}/users`,
@@ -59,7 +59,7 @@ class TeamService {
 
   static async deleteTeamUserRelation({ teamId, relationId }) {
     try {
-      const baseURL = config.get("v3teamsAPI.url");
+      const baseURL = config.get("teamsAPI.url");
       const response = await axios.default({
         baseURL,
         url: `/teams/${teamId}/users/${relationId}`,

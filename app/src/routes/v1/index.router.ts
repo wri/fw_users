@@ -2,8 +2,6 @@ import TeamService from "../../services/teams.service";
 import AreaService from "../../services/areas.service";
 import ReportService from "../../services/reports.service";
 import LayerService from "../../services/layers.service";
-
-const logger = require("logger").default;
 const Router = require("koa-router");
 
 const router = new Router({
@@ -82,7 +80,7 @@ const getUserData = async (ctx, next) => {
 };
 
 const isAuthenticatedMiddleware = async (ctx, next) => {
-  logger.info(`Verifying if user is authenticated`);
+  //logger.info(`Verifying if user is authenticated`);
   const { query, body } = ctx.request;
 
   const user = {

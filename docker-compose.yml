@@ -3,30 +3,46 @@ services:
     build: .
     ports:
       - "3001:3001"
-    container_name: fw-users # TODO: Update name in final service
+    container_name: fw-users
     environment:
       PORT: 3001
+      AUTH_URL: https://staging-api.resourcewatch.org
+      FORMS_API_URL: https://dev-fw-api.globalforestwatch.org
+      AREAS_API_URL: https://dev-fw-api.globalforestwatch.org/v3/forest-watcher
+      LAYERS_API_URL: https://dev-fw-api.globalforestwatch.org
+      TEAMS_API_URL: https://dev-fw-api.globalforestwatch.org/v3
     volumes:
-      - ./app:/opt/fw-users/app # TODO: Update fw-users in final service
-      - ./config:/opt/fw-users/config # TODO: Update fw-users in final service
-      - ./nodemon.json:/opt/fw-users/nodemon.json # TODO: fw-users name in final service
+      - ./app:/opt/fw-users/app
+      - ./config:/opt/fw-users/config
+      - ./nodemon.json:/opt/fw-users/nodemon.json
     command: yarn dev
 
   test:
     build: .
-    container_name: fw-users-test # TODO: Update name in final service
+    container_name: fw-users-test
+    environment:
+      PORT: 0
+      NODE_ENV: test
+      LOGGER_LEVEL: debug
+      SUPPRESS_NO_CONFIG_WARNING: "true"
+      AUTH_URL: http://127.0.0.1:9000
+      FORMS_API_URL: http://127.0.0.1:9000
+      AREAS_API_URL: http://127.0.0.1:9000
+      LAYERS_API_URL: http://127.0.0.1:9000
+      TEAMS_API_URL: http://127.0.0.1:9000
+      API_VERSION: v1
     volumes:
-      - ./app:/opt/fw-users/app # TODO: Update fw-users in final service
-      - ./config:/opt/fw-users/config # TODO: Update fw-users in final service
-      - ./nodemon.json:/opt/fw-users/nodemon.json # TODO: Update fw-users in final service
-      - ./jest.config.js:/opt/fw-users/jest.config.js # TODO: Update fw-users in final service
+      - ./app:/opt/fw-users/app
+      - ./config:/opt/fw-users/config
+      - ./nodemon.json:/opt/fw-users/nodemon.json
+      - ./jest.config.js:/opt/fw-users/jest.config.js
     command: yarn test
 
   docs:
     build: .
     ports:
       - "30010:30010"
-    container_name: fw-users-docs # TODO: Update name in final service
+    container_name: fw-users-docs
     volumes:
-      - ./docs:/opt/fw-users/docs # TODO: Update fw-users in final service
+      - ./docs:/opt/fw-users/docs
     command: yarn run docs -l 30010

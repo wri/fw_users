@@ -60,3 +60,7 @@ variable "healthcheck_path" {
 variable "healthcheck_sns_emails" {
   type    = list(string)
 }
+variable "auth_url" {
+  type    = string
+  default = "https://api.resourcewatch.org"
+}
