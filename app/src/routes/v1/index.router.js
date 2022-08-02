@@ -12,11 +12,14 @@ const router = new Router({
 
 class UserRouter {
   static async delete(ctx) {
+
+    const userId = ctx.request.body.loggedUser.id
+    const { userTeams, areas, templates } = ctx.request.body
+
     // **** check that user isn't part of any teams ****
-    if(await TeamService.checkUserAdmin) ctx.throw(400,"Cannot delete a team administrator. Please reassign all team administrators before deleting account.");
+    if(await TeamService.checkUserAdmin(userTeams)) ctx.throw(400,"Cannot delete a team administrator. Please reassign all team administrators before deleting account.");
     
     // **** remove all area links to teams and templates ****
-    const areas = await AreaService.getAreas();
     areas.forEach(area => {
       // delete all template relations
       AreaService.deleteTemplateRelations(area.id);
@@ -28,7 +31,6 @@ class UserRouter {
     // delete all user answers
     await ReportService.deleteAllAnswersForUser();
     // once answers are deleted, need to get all templates for user
-    const templates = await ReportService.getAllTemplates();
     templates.forEach(template => {
       if(!template.attributes.public) { // if the template isn't a public template
         // check if template is used for any report answers
@@ -43,9 +45,38 @@ class UserRouter {
     LayerService.deleteAllLayers();
 
     // remove user from their teams (don't just leave team)
-
+    userTeams.forEach(team => {
+      // delete each team-user relation instance
+      userTeamRelation = team.attributes.members.find(member => member.userId.toString === userId)
+      if(userTeamRelation) TeamService.deleteTeamUserRelation(userTeamRelation.id)
+    });
 
   }
+
+  static async deletePreflight(ctx) {
+
+    const { userTeams, areas, templates } = ctx.request.body
+    const response = {
+      userTeams: userTeams.length || 0, 
+      areas: areas.length || 0, 
+      templates: templates.length || 0
+    }
+    ctx.status = 200;
+    ctx.body = response;
+  }
+
+}
+
+const getUserData = async (ctx, next) => {
+
+  const userTeams = await TeamService.getUserTeams(userId);
+  const areas = await AreaService.getAreas();
+  const templates = await ReportService.getAllTemplates();
+
+  ctx.request.body.userTeams = userTeams;
+  ctx.request.body.areas = areas;
+  ctx.request.body.templates = templates;
+
 }
 
 const isAuthenticatedMiddleware = async (ctx, next) => {
@@ -64,6 +95,7 @@ const isAuthenticatedMiddleware = async (ctx, next) => {
   await next();
 };
 
-router.delete("/", isAuthenticatedMiddleware, UserRouter.delete);
+router.get("/deletePreflight", isAuthenticatedMiddleware, getUserData, UserRouter.deletePreflight)
+router.delete("/", isAuthenticatedMiddleware, getUserData, UserRouter.delete);
 
 export default router;
