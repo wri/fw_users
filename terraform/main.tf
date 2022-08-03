@@ -73,7 +73,7 @@ data "template_file" "container_definition" {
     db_secret_arn = data.terraform_remote_state.core.outputs.document_db_secrets_arn
     data_bucket = data.terraform_remote_state.fw_core.outputs.data_bucket
     redis_endpoint = data.terraform_remote_state.core.outputs.redis_replication_group_primary_endpoint_address
-    AUTH_URL = var.auth_url
+    AUTH_URL = var.AUTH_URL
     FORMS_API_URL = "https://${data.terraform_remote_state.fw_core.outputs.public_url}"
     AREAS_API_URL = "https://${data.terraform_remote_state.fw_core.outputs.public_url}/v3/forest-watcher"
     LAYERS_API_URL = "https://${data.terraform_remote_state.fw_core.outputs.public_url}"
