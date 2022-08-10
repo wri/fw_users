@@ -22,3 +22,9 @@ extends:
 rules:
   prettier/prettier: error
   "@typescript-eslint/no-var-requires": 0
+settings:
+  import/resolver:
+    node:
+      moduleDirectory:
+        - node_modules
+        - app/src

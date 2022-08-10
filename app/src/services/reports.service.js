@@ -27,14 +27,14 @@ class ReportService {
       const baseURL = config.get("formsAPI.url");
       const response = await axios.default({
         baseURL,
-        url: `/v1/reports/`,
+        url: `/v1/reports`,
         method: "GET",
         headers: {
           authorization: loggedInUserService.token
         }
       });
       const templates = response.data;
-      logger.info(`Got templates ${templates}`);
+      logger.info(`Got templates ${{ ...templates }}`);
       return templates && templates.data;
     } catch (e) {
       logger.info("Failed to get templates");
@@ -46,7 +46,7 @@ class ReportService {
       const baseURL = config.get("formsAPI.url");
       const response = await axios.default({
         baseURL,
-        url: `/v1/reports/${templateId}/answers`,
+        url: `/v1/reports/${templateId.toString()}/answers`,
         method: "GET",
         headers: {
           authorization: loggedInUserService.token
@@ -56,7 +56,7 @@ class ReportService {
       logger.info(`Got template answers ${answers}`);
       return answers && answers.data;
     } catch (e) {
-      logger.info("Failed to get answers");
+      logger.info("Failed to get answers", templateId, e);
     }
   }
 
@@ -65,7 +65,7 @@ class ReportService {
       const baseURL = config.get("formsAPI.url");
       const response = await axios.default({
         baseURL,
-        url: `/v3/reports/${templateId}`,
+        url: `/v3/reports/${templateId.toString()}`,
         method: "DELETE",
         headers: {
           authorization: loggedInUserService.token

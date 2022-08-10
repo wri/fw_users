@@ -15,6 +15,7 @@ class TeamService {
   static async getUserTeams(user) {
     let teams = [];
     try {
+      logger.info("Getting user teams for team id", user.toString());
       const baseURL = config.get("teamsAPI.url");
       const response = await axios.default({
         baseURL,
@@ -41,7 +42,7 @@ class TeamService {
       const baseURL = config.get("teamsAPI.url");
       const response = await axios.default({
         baseURL,
-        url: `/teams/${teamId}/users`,
+        url: `/teams/${teamId.toString()}/users`,
         method: "GET",
         headers: {
           authorization: loggedInUserService.token
@@ -62,7 +63,7 @@ class TeamService {
       const baseURL = config.get("teamsAPI.url");
       const response = await axios.default({
         baseURL,
-        url: `/teams/${teamId}/users/${relationId}`,
+        url: `/teams/${teamId.toString()}/users/${relationId.toString()}`,
         method: "DELETE",
         headers: {
           authorization: loggedInUserService.token

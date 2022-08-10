@@ -6,6 +6,7 @@ services:
     container_name: fw-users
     environment:
       PORT: 3001
+      LOGGER_LEVEL: debug
       AUTH_URL: https://staging-api.resourcewatch.org
       FORMS_API_URL: https://dev-fw-api.globalforestwatch.org
       AREAS_API_URL: https://dev-fw-api.globalforestwatch.org/v3/forest-watcher
