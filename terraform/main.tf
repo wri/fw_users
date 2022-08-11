@@ -53,7 +53,7 @@ module "fargate_autoscaling" {
   lb_target_group_arn = module.fargate_autoscaling.lb_target_group_arn
   listener_arn        = data.terraform_remote_state.fw_core.outputs.lb_listener_arn
   project_prefix      = var.project_prefix
-  path_pattern        = ["${var.healthcheck_path}", "/fw_users*"] // TODO
+  path_pattern        = ["${var.healthcheck_path}", "/users*"] 
   health_check_path = var.healthcheck_path
   priority = 9 // TODO: must be unique for across all services
 }
