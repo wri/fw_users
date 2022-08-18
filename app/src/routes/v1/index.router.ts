@@ -27,7 +27,8 @@ const deleteReports = async (templates: [any]) => {
 
 class UserRouter {
   static async delete(ctx: any) {
-    const userId = ctx.request.query.loggedUser.id;
+    const user = JSON.parse(ctx.request.query.loggedUser);
+    const userId = user.id;
     const { userTeams, areas, templates } = ctx.request.query;
 
     // **** check that user isn't part of any teams ****
@@ -54,15 +55,14 @@ class UserRouter {
     // remove user from their teams (don't just leave team)
     userTeams.forEach((team: any) => {
       // delete each team-user relation instance
-      const userTeamRelation = team.attributes.members.find((member: any) => member.userId.toString === userId);
-      if (userTeamRelation) TeamService.deleteTeamUserRelation(userTeamRelation.id);
+      const userTeamRelation = team.attributes.members.find((member: any) => member.userId.toString() === userId);
+      if (userTeamRelation) TeamService.deleteTeamUserRelation({ teamId: team.id, relationId: userTeamRelation._id });
     });
 
     ctx.status = 204;
   }
 
   static async deletePreflight(ctx: any) {
-    //console.log("PREFLIGHT")
     const { userTeams, areas, templates } = ctx.request.query;
     const response = {
       userTeams: userTeams.length || 0,
@@ -76,16 +76,15 @@ class UserRouter {
 
 const getUserData = async (ctx: any, next: any) => {
   const user = JSON.parse(ctx.request.query.loggedUser);
-  const userTeams = await TeamService.getUserTeams(user.id);
-  //console.log("USER TEAMS", userTeams)
-  const areas = await AreaService.getAreas();
-  //console.log("AREAS", areas)
-  const templates = await ReportService.getAllTemplates();
-  //console.log("TEMPLATES", templates)
+  const userTeams = TeamService.getUserTeams(user.id);
+  const areas = AreaService.getAreas();
+  const templates = ReportService.getAllTemplates();
 
-  ctx.request.query.userTeams = userTeams || [];
-  ctx.request.query.areas = areas || [];
-  ctx.request.query.templates = templates || [];
+  const [userTeamsData, areasData, templatesData] = await Promise.all([userTeams, areas, templates]);
+
+  ctx.request.query.userTeams = userTeamsData || [];
+  ctx.request.query.areas = areasData || [];
+  ctx.request.query.templates = templatesData || [];
 
   await next();
 };

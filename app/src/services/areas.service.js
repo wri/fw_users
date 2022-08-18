@@ -37,7 +37,7 @@ class AreaService {
           authorization: loggedInUserService.token
         }
       });
-      logger.info(`Deleted template relations for area ${areaId} with status code ${response.statusCode}`);
+      logger.info(`Deleted template relations for area ${areaId} with status code ${response.status}`);
       return Promise.resolve();
     } catch (e) {
       logger.error(`Error while deleting template relations for area ${areaId}`, e);
@@ -57,7 +57,7 @@ class AreaService {
           authorization: loggedInUserService.token
         }
       });
-      logger.info(`Deleted team relations for area ${areaId} with status code ${response.statusCode}`);
+      logger.info(`Deleted team relations for area ${areaId} with status code ${response.status}`);
       return Promise.resolve();
     } catch (e) {
       logger.error(`Error while deleting team relations for area ${areaId}`, e);

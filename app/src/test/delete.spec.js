@@ -50,7 +50,6 @@ describe("Delete Account", () => {
     it("should return an object containing values", async () => {
       const res = await request(server).get(`/v1/users/deletePreflight`);
       expect(res.status).toBe(200);
-      console.log(res.body);
       expect(res.body.data).toEqual(
         expect.objectContaining({
           userTeams: 1,
@@ -67,8 +66,6 @@ describe("Delete Account", () => {
         area1 = new ObjectId(),
         template1 = new ObjectId(),
         answer1 = new ObjectId();
-
-      console.log("TEMPLATE", template1);
 
       nock(config.get("areasAPI.url"))
         .persist()
@@ -152,9 +149,7 @@ describe("Delete Account", () => {
             }
           ]
         });
-      console.log(nock.activeMocks());
       const res = await request(server).delete(`/v1/users`);
-      console.log(nock.activeMocks());
       expect(res.status).toBe(204);
     });
 

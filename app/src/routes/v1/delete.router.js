@@ -62,7 +62,6 @@ class UserRouter {
   }
 
   static async deletePreflight(ctx) {
-    //console.log("PREFLIGHT")
     const { userTeams, areas, templates } = ctx.request.query;
     const response = {
       userTeams: userTeams.length || 0,
@@ -77,11 +76,8 @@ class UserRouter {
 const getUserData = async (ctx, next) => {
   const user = JSON.parse(ctx.request.query.loggedUser);
   const userTeams = await TeamService.getUserTeams(user.id);
-  //console.log("USER TEAMS", userTeams)
   const areas = await AreaService.getAreas();
-  //console.log("AREAS", areas)
   const templates = await ReportService.getAllTemplates();
-  //console.log("TEMPLATES", templates)
 
   ctx.request.query.userTeams = userTeams || [];
   ctx.request.query.areas = areas || [];
