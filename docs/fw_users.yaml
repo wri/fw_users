@@ -14,7 +14,7 @@ servers:
   - url: 'http://localhost:3001/v1/users'
     description: Local
 paths:
-  /users:
+  /:
     delete:
       summary: Delete Current User
       operationId: delete-v1-users
