@@ -2,19 +2,21 @@ openapi: 3.1.0
 info:
   title: fw_users
   version: '1.0'
+  summary: Users Microservice
+  description: Microservice to handle user specific requests
 servers:
   - description: Dev
-    url: 'https://dev-fw-api.globalforestwatch.org/v1'
-  - url: 'https://staging-fw-api.globalforestwatch.org/v1'
+    url: 'https://dev-fw-api.globalforestwatch.org/v1/users'
+  - url: 'https://staging-fw-api.globalforestwatch.org/v1/users'
     description: Staging
-  - url: 'https://api.resourcewatch.org/v1'
+  - url: 'https://api.resourcewatch.org/v1/users'
     description: Production
-  - url: 'http://localhost:3001/v1'
+  - url: 'http://localhost:3001/v1/users'
     description: Local
 paths:
   /users:
     delete:
-      summary: ''
+      summary: Delete Current User
       operationId: delete-v1-users
       responses:
         '204':
