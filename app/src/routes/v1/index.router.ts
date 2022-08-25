@@ -55,7 +55,8 @@ class UserRouter {
     // remove user from their teams (don't just leave team)
     userTeams.forEach((team: any) => {
       // delete each team-user relation instance
-      const userTeamRelation = team.attributes.members.find((member: any) => member.userId.toString() === userId);
+      console.log("********", team.attributes.members)
+      const userTeamRelation = team.attributes.members.find((member: any) => member.userId?.toString() === userId);
       if (userTeamRelation) TeamService.deleteTeamUserRelation({ teamId: team.id, relationId: userTeamRelation._id });
     });
 
