@@ -1,11 +1,32 @@
 openapi: 3.1.0
 info:
-  title: fw_service_template # TODO: Update name in final service
+  title: fw_users
   version: '1.0'
+  summary: Users Microservice
+  description: Microservice to handle user specific requests
 servers:
-  - url: 'http://localhost:3000'
+  - description: Dev
+    url: 'https://dev-fw-api.globalforestwatch.org/v1/users'
+  - url: 'https://staging-fw-api.globalforestwatch.org/v1/users'
+    description: Staging
+  - url: 'https://api.resourcewatch.org/v1/users'
+    description: Production
+  - url: 'http://localhost:3001/v1/users'
     description: Local
 paths:
+  /:
+    delete:
+      summary: Delete Current User
+      operationId: delete-v1-users
+      responses:
+        '204':
+          description: No Content
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/Error'
+      description: Deletes all data held by 3 sided cube for the existing user. Will return a 400 error if user is admin of a team and a 401 error if user is not authorised
+    parameters: []
 components:
   schemas: {}
   securitySchemes:

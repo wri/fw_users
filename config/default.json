@@ -1,0 +1,11 @@
+{
+  "service": {
+    "port": "3001"
+  },
+  "logger": {
+    "name": "forest-watcher",
+    "level": "debug",
+    "toFile": false,
+    "dirLogFile": null
+  }
+}
