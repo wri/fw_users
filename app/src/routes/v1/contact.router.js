@@ -1,4 +1,5 @@
 const SparkpostService = require("../../services/sparkpost.service");
+const UserService = require("../../services/user.service");
 const Router = require("koa-router");
 
 const router = new Router({
@@ -7,10 +8,12 @@ const router = new Router({
 
 class UserRouter {
   static async contact(ctx) {
-    console.log("contacting")
-    const {fullname, email, tool, topic, message} = ctx.request.body;
+    console.log(ctx.request.body)
+    const {loggedUser, platform, queryRelate, query} = ctx.request.body;
 
-    const response = await SparkpostService.sendMail({fullname, email, tool, topic, message})
+    const username = await UserService.getUserName(loggedUser.id)
+
+    const response = await SparkpostService.sendMail({fullname: username, email: loggedUser.email, platform, queryRelate, query})
 
     ctx.body = {data: response.results.total_accepted_recipients === 1 ? "emailSent" : "emailRejected"};
     ctx.status = 200;

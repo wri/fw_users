@@ -53,15 +53,11 @@ paths:
             schema:
               type: object
               properties:
-                fullname:
+                platform:
                   type: string
-                email:
+                queryRelate:
                   type: string
-                tool:
-                  type: string
-                topic:
-                  type: string
-                message:
+                query:
                   type: string
 components:
   schemas: {}
