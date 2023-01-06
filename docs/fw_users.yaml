@@ -34,8 +34,6 @@ paths:
       responses:
         '200':
           description: OK
-        '401':
-          description: Unauthorized
           content:
             application/json:
               schema:
@@ -43,9 +41,8 @@ paths:
                 properties:
                   data:
                     type: string
-                    enum:
-                      - emailSent
-                      - emailRejected
+        '401':
+          $ref: '#/components/responses/Error'
       description: Sends an email to a prearranged email address containing help form info
       requestBody:
         content:
