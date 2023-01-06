@@ -12,6 +12,7 @@ services:
       AREAS_API_URL: https://dev-fw-api.globalforestwatch.org/v3/forest-watcher
       LAYERS_API_URL: https://dev-fw-api.globalforestwatch.org
       TEAMS_API_URL: https://dev-fw-api.globalforestwatch.org/v3
+      SPARKPOST_API_KEY: ${sparkpost_api_key}
     volumes:
       - ./app:/opt/fw-users/app
       - ./config:/opt/fw-users/config

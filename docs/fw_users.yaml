@@ -27,6 +27,42 @@ paths:
           $ref: '#/components/responses/Error'
       description: Deletes all data held by 3 sided cube for the existing user. Will return a 400 error if user is admin of a team and a 401 error if user is not authorised
     parameters: []
+  /contact:
+    post:
+      summary: Send Contact Email
+      operationId: post-contact
+      responses:
+        '200':
+          description: OK
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: string
+                    enum:
+                      - emailSent
+                      - emailRejected
+      description: Sends an email to a prearranged email address containing help form info
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                fullname:
+                  type: string
+                email:
+                  type: string
+                tool:
+                  type: string
+                topic:
+                  type: string
+                message:
+                  type: string
 components:
   schemas: {}
   securitySchemes:

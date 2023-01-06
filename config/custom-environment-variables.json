@@ -1,6 +1,7 @@
 {
   "service": {
-    "port": "PORT"
+    "port": "PORT",
+    "token": "MICROSERVICE_TOKEN"
   },
   "logger": {
     "level": "LOGGER_LEVEL"
@@ -19,5 +20,9 @@
   },
   "auth": {
     "url": "AUTH_URL"
+  },
+  "sparkpost": {
+    "apiKey": "SPARKPOST_API_KEY",
+    "recipient": "edwardjamesmartin@gmail.com"
   }
 }
