@@ -41,9 +41,9 @@ class UserRouter {
       deletedTemplates: deletedReports.deletedTemplates,
       notDeletedTemplates: deletedReports.undeletedTemplates,
       deletedAnswers: deletedReports.deletedAnswers,
-      teamsRemovedFrom: null,
-      teamsNotRemovedFrom: null,
-      errors: [...deletedReports.errors, ...[]]
+      teamsRemovedFrom: deletedTeams.teamsDeletedFrom,
+      teamsNotRemovedFrom: deletedTeams.teamsNotDeletedFrom,
+      errors: [...deletedReports.errors, ...deletedTeams.errors]
     }};
     ctx.status = 200;
   }
@@ -74,7 +74,6 @@ const getUserData = async (ctx, next) => {
 };
 
 const isAuthenticatedMiddleware = async (ctx, next) => {
-  //logger.info(`Verifying if user is authenticated`);
   const { query, body, params } = ctx.request;
 
   const user = {

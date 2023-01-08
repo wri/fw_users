@@ -75,6 +75,23 @@ class TeamService {
     }
     return Promise.resolve();
   }
+
+  static async removeAll(userId) {
+  try {
+    const baseURL = config.get("teamsAPI.url");
+    const response = await axios.default({
+      baseURL,
+      url: `/deleteUserFromAllTeams/${userId}`,
+      method: "DELETE",
+      headers: {
+        authorization: loggedInUserService.token
+      }
+    });
+    return response.data
+  } catch(e) {
+    logger.info("Failed to delete user from teams")
+  }
+  }
 }
 
 module.exports = TeamService;
