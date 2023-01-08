@@ -15,11 +15,10 @@ class ReportService {
           authorization: loggedInUserService.token
         }
       });
-      logger.info("Answers deleted with status code", response.status);
+      return response.data
     } catch (e) {
       logger.info("Failed to delete answers");
     }
-    return Promise.resolve();
   }
 
   static async getAllTemplates(userId) {
