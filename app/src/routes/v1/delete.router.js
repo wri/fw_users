@@ -90,7 +90,7 @@ const isAuthenticatedMiddleware = async (ctx, next) => {
   await next();
 };
 
-router.get("/:userId/deletePreflight", isAuthenticatedMiddleware, getUserData, UserRouter.deletePreflight);
+router.get("/:userId", isAuthenticatedMiddleware, getUserData, UserRouter.deletePreflight);
 router.delete("/:userId", isAuthenticatedMiddleware, getUserData, UserRouter.delete);
 
 module.exports = router;

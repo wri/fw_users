@@ -14,19 +14,97 @@ servers:
   - url: 'http://localhost:3001/v1/users'
     description: Local
 paths:
-  /:
+  '/delete/:userId':
     delete:
-      summary: Delete Current User
+      summary: Delete user info
       operationId: delete-v1-users
       responses:
-        '204':
-          description: No Content
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      deletedLayers:
+                        type: array
+                        items:
+                          type: string
+                      deletedTemplates:
+                        type: array
+                        items:
+                          type: string
+                      notDeletedTemplates:
+                        type: array
+                        items:
+                          type: string
+                      deletedAnswers:
+                        type: array
+                        items:
+                          type: string
+                      teamsRemovedFrom:
+                        type: array
+                        items:
+                          type: string
+                      teamsNotRemovedFrom:
+                        type: array
+                        items:
+                          type: string
+                      errors:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                            error:
+                              type: string
         '400':
           $ref: '#/components/responses/Error'
         '401':
           $ref: '#/components/responses/Error'
-      description: Deletes all data held by 3 sided cube for the existing user. Will return a 400 error if user is admin of a team and a 401 error if user is not authorised
+      description: Deletes all data held by 3 sided cube for the existing user. Will return a 400 error if user is admin of a team and a 401 error if user is not authorised. Can delete your own info or any users if using microservice token
     parameters: []
+    get:
+      summary: Get delete info
+      operationId: 'get-delete-:userId'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      uesrTeams:
+                        type: array
+                        items:
+                          type: object
+                      areas:
+                        type: array
+                        items:
+                          type: object
+                      templates:
+                        type: array
+                        items:
+                          type: object
+                      layers:
+                        type: array
+                        items:
+                          type: object
+                      answers:
+                        type: array
+                        items:
+                          type: object
+        '401':
+          $ref: '#/components/responses/Error'
+      description: Returns info on all entities that will be deleted by the delete function
   /contact:
     post:
       summary: Send Contact Email
