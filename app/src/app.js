@@ -3,6 +3,7 @@ const config = require("config");
 const logger = require("./logger");
 const loader = require("./loader");
 const LoggedInUserService = require("./services/LoggedInUserService");
+const cors = require("@koa/cors");
 
 const koaBody = require("koa-body")({
   multipart: true,
@@ -14,6 +15,7 @@ const koaBody = require("koa-body")({
 const app = new Koa();
 
 app.use(koaBody);
+app.use(cors());
 
 app.use(async (ctx, next) => {
   await LoggedInUserService.setLoggedInUser(ctx, logger);
