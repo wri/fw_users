@@ -86,10 +86,6 @@ paths:
                         type: array
                         items:
                           type: object
-                      areas:
-                        type: array
-                        items:
-                          type: object
                       templates:
                         type: array
                         items:

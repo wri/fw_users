@@ -5,22 +5,22 @@ const loggedInUserService = require("./LoggedInUserService");
 
 class LayerService {
 
-  static async getAllLayers() {
+  static async getAllLayers(userId) {
     try {
       const baseURL = config.get("layersAPI.url");
       const response = await axios.default({
         baseURL,
-        url: `/v1`,
+        url: `/user/${userId}`,
         method: "GET",
         headers: {
           authorization: loggedInUserService.token
         }
       });
       logger.info("Got layers", response.data);
+      return response.data && response.data.data;
     } catch (e) {
-      logger.info("Failed to get layers");
+      logger.info("Failed to get layers", e);
     }
-    return response.data && response.data.data;
   }
 
   static async deleteAllLayers(userId) {
@@ -28,7 +28,7 @@ class LayerService {
       const baseURL = config.get("layersAPI.url");
       const response = await axios.default({
         baseURL,
-        url: `/v3/deleteAllUserLayers`,
+        url: `/user/${userId}`,
         method: "DELETE",
         headers: {
           authorization: loggedInUserService.token

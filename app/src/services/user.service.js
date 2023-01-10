@@ -17,7 +17,6 @@ class UserService {
         }
       });
       const user = response.data
-      console.log(user)
       return user && `${user.data.attributes.firstName} ${user.data.attributes.lastName}`;
     } catch (e) {
       logger.info("Failed to fetch username", e);

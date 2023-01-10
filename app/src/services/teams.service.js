@@ -13,7 +13,6 @@ class TeamService {
   }
 
   static async getUserTeams(user) {
-    let teams = [];
     try {
       logger.info("Getting user teams for team id", user.toString());
       const baseURL = config.get("teamsAPI.url");
@@ -25,14 +24,14 @@ class TeamService {
           authorization: loggedInUserService.token
         }
       });
-      teams = response.data;
+      const teams = response.data;
+      if (teams.length === 0) {
+        logger.info("User does not belong to a team.");
+      }
+      return teams && teams.data;
     } catch (e) {
       logger.info("Failed to fetch teams", e);
     }
-    if (teams.length === 0) {
-      logger.info("User does not belong to a team.");
-    }
-    return teams && teams.data;
   }
 
   static async getTeamUsers(teamId) {

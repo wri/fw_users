@@ -3,7 +3,7 @@ const AreaService = require("../../services/areas.service");
 const ReportService = require("../../services/reports.service");
 const LayerService = require("../../services/layers.service");
 const Router = require("koa-router");
-const { config } = require("process");
+const config =require("config");
 
 const router = new Router({
   prefix: "/users/delete"
@@ -21,11 +21,11 @@ class UserRouter {
         "Cannot delete a team administrator. Please reassign all team administrators before deleting account."
       );
 
-    // **** remove all area links to teams and templates ****
+/*     // **** remove all area links to teams and templates ****
     areas.forEach(area => {
       AreaService.deleteTemplateRelations(area.id);
       AreaService.deleteTeamRelations(area.id);
-    });
+    }); */
 
     // **** remove all reports and templates****
     const deletedReports = await ReportService.deleteAll(userId);
@@ -59,13 +59,11 @@ class UserRouter {
 const getUserData = async (ctx, next) => {
   const {userId} = ctx.request.params;
   const userTeams = await TeamService.getUserTeams(userId);
-  const areas = await AreaService.getAreas();
-  const templates = await ReportService.getAllTemplates();
-  const layers = await LayerService.getAllLayers();
-  const answers = await ReportService.getAllAnswers();
+  const templates = await ReportService.getAllTemplates(userId);
+  const layers = await LayerService.getAllLayers(userId);
+  const answers = await ReportService.getAllAnswers(userId);
 
   ctx.request.query.userTeams = userTeams || [];
-  ctx.request.query.areas = areas || [];
   ctx.request.query.templates = templates || [];
   ctx.request.query.layers = layers || [];
   ctx.request.query.answers = answers || [];

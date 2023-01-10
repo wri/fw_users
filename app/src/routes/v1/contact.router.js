@@ -8,7 +8,6 @@ const router = new Router({
 
 class UserRouter {
   static async contact(ctx) {
-    console.log(ctx.request.body)
     const {loggedUser, platform, queryRelate, query} = ctx.request.body;
 
     if(!(platform && query && queryRelate)) ctx.throw(400, "All fields must be completed")

@@ -26,17 +26,17 @@ class ReportService {
       const baseURL = config.get("formsAPI.url");
       const response = await axios.default({
         baseURL,
-        url: `/latest/${userId}`,
+        url: `/latestByUserId/${userId}`,
         method: "GET",
         headers: {
           authorization: loggedInUserService.token
         }
       });
       const templates = response.data;
-      logger.info(`Got templates ${{ ...templates }}`);
+      logger.info(`Got templates`);
       return templates && templates.data;
     } catch (e) {
-      logger.info("Failed to get templates");
+      logger.info("Failed to get templates", e);
     }
   }
 
@@ -52,10 +52,10 @@ class ReportService {
         }
       });
       const answers = response.data;
-      logger.info(`Got answers ${{ ...templates }}`);
+      logger.info(`Got answers`);
       return answers && answers.data;
     } catch (e) {
-      logger.info("Failed to get answers");
+      logger.info("Failed to get answers",e);
     }
   }
 
