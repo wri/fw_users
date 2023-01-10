@@ -11,6 +11,8 @@ class UserRouter {
     console.log(ctx.request.body)
     const {loggedUser, platform, queryRelate, query} = ctx.request.body;
 
+    if(!(platform && query && queryRelate)) ctx.throw(400, "All fields must be completed")
+
     const username = await UserService.getUserName(loggedUser.id)
 
     const response = await SparkpostService.sendMail({fullname: username, email: loggedUser.email, platform, queryRelate, query})
