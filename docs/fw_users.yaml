@@ -130,6 +130,59 @@ paths:
                   type: string
                 query:
                   type: string
+  /me:
+    get:
+      summary: Get user info
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      _id:
+                        type: string
+                      email:
+                        type: string
+                      provider:
+                        type: string
+                      role:
+                        type: string
+                      extraUserData:
+                        type: object
+                        properties:
+                          apps:
+                            type: array
+                            items:
+                              type: string
+                      createdAt:
+                        type: string
+                      updatedAt:
+                        type: string
+                x-examples:
+                  example-1:
+                    data:
+                      id: 6242c57a880445001a46c499
+                      _id: 6242c57a880445001a46c499
+                      email: cubegfw@gmail.com
+                      provider: local
+                      role: USER
+                      extraUserData:
+                        apps:
+                          - gfw
+                      createdAt: '2022-03-29T08:38:19.000Z'
+                      updatedAt: '2022-12-13T18:28:40.000Z'
+        '401':
+          $ref: '#/components/responses/Error'
+      operationId: get-me
+      description: Get current user info
 components:
   schemas: {}
   securitySchemes:

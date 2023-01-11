@@ -20,6 +20,11 @@ class UserRouter {
     ctx.status = 200;
   }
 
+  static getMe(ctx) {
+    const user = JSON.parse(ctx.request.query.loggedUser)
+    ctx.body = {data: user}
+  }
+
 }
 
 const isAuthenticatedMiddleware = async (ctx, next) => {
@@ -39,5 +44,6 @@ const isAuthenticatedMiddleware = async (ctx, next) => {
 };
 
 router.post("/contact", isAuthenticatedMiddleware, UserRouter.contact);
+router.get("/me", isAuthenticatedMiddleware, UserRouter.getMe)
 
 export default router;
