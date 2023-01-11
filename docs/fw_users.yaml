@@ -6,15 +6,15 @@ info:
   description: Microservice to handle user specific requests
 servers:
   - description: Dev
-    url: 'https://dev-fw-api.globalforestwatch.org/v1/users'
-  - url: 'https://staging-fw-api.globalforestwatch.org/v1/users'
+    url: 'https://dev-fw-api.globalforestwatch.org'
+  - url: 'https://staging-fw-api.globalforestwatch.org'
     description: Staging
-  - url: 'https://api.resourcewatch.org/v1/users'
+  - url: 'https://api.resourcewatch.org'
     description: Production
-  - url: 'http://localhost:3001/v1/users'
+  - url: 'http://localhost:3001'
     description: Local
 paths:
-  '/delete/:userId':
+  '/v1/users/delete/:userId':
     delete:
       summary: Delete user info
       operationId: delete-v1-users
@@ -101,7 +101,7 @@ paths:
         '401':
           $ref: '#/components/responses/Error'
       description: Returns info on all entities that will be deleted by the delete function
-  /contact:
+  /v1/users/contact:
     post:
       summary: Send Contact Email
       operationId: post-contact
@@ -130,7 +130,8 @@ paths:
                   type: string
                 query:
                   type: string
-  /me:
+    parameters: []
+  /v1/users/me:
     get:
       summary: Get user info
       tags: []
@@ -197,6 +198,7 @@ paths:
           $ref: '#/components/responses/Error'
       operationId: get-me
       description: Get current user info
+    parameters: []
 components:
   schemas: {}
   securitySchemes:
