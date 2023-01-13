@@ -48,13 +48,13 @@ class TeamService {
         }
       });
       teams = response.data;
+      if (teams.length === 0) {
+        logger.info("No users are on this team.");
+      }
+      return teams.data;
     } catch (e) {
       logger.info("Failed to fetch users");
     }
-    if (teams.length === 0) {
-      logger.info("No users are on this team.");
-    }
-    return teams.data;
   }
 
   static async deleteTeamUserRelation({ teamId, relationId }) {

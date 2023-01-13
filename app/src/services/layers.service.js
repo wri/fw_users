@@ -35,10 +35,10 @@ class LayerService {
         }
       });
       logger.info("Layers deleted with status code", response.status);
+      return response.data && response.data.data;
     } catch (e) {
-      logger.info("Failed to delete layers");
+      logger.info("Failed to delete layers", e);
     }
-    return response.data && response.data.data;
   }
 }
 

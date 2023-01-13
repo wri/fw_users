@@ -11,7 +11,7 @@ const router = new Router({
 
 class UserRouter {
   static async delete(ctx) {
-    const userId = ctx.request.query.loggedUser.id;
+    const { userId } = ctx.request.params;
     const { userTeams, areas } = ctx.request.query;
 
     // **** check that user isn't part of any teams ****
