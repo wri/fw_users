@@ -35,7 +35,7 @@ class LayerService {
         }
       });
       logger.info("Layers deleted with status code", response.status);
-      return response.data && response.data.data;
+      return response.data && response.data.data.layersDeleted;
     } catch (e) {
       logger.info("Failed to delete layers", e);
     }
