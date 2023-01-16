@@ -5,7 +5,6 @@ const sparky = new SparkPost(config.get('sparkpost.apiKey'));
 
 class SparkpostService {
     static async sendMail(content) {
-
         return await sparky.transmissions
             .send({
                 options: {
@@ -18,7 +17,7 @@ class SparkpostService {
                     <p>Email: ${content.email}</p>
                     <p>Platform: ${content.platform}</p>
                     <p>Topic: ${content.queryRelate}</p>
-                    <p>Query: ${content.query}</p>
+                    <p>Query: ${content.query.replace(/\n/g, '<br>')}</p>
                     </body></html>`
                 },
                 recipients: [{ address: config.get('sparkpost.recipient') }]

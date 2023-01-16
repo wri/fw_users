@@ -15,9 +15,55 @@ servers:
     description: Local
 paths:
   '/v1/users/delete/:userId':
-    delete:
+    parameters: []
+    get:
+      summary: Get delete info
+      operationId: 'get-delete-:userId'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      uesrTeams:
+                        type: array
+                        items:
+                          type: object
+                      templates:
+                        type: array
+                        items:
+                          type: object
+                      layers:
+                        type: array
+                        items:
+                          type: object
+                      answers:
+                        type: array
+                        items:
+                          type: object
+              examples:
+                example-1:
+                  value:
+                    data:
+                      uesrTeams:
+                        - {}
+                      templates:
+                        - {}
+                      layers:
+                        - {}
+                      answers:
+                        - {}
+        '401':
+          $ref: '#/components/responses/Error'
+      description: Returns info on all entities that will be deleted by the delete function
+    patch:
       summary: Delete user info
-      operationId: delete-v1-users
+      operationId: 'patch-v1-users-delete-:userId'
       responses:
         '200':
           description: OK
@@ -62,45 +108,56 @@ paths:
                               type: string
                             error:
                               type: string
-        '400':
-          $ref: '#/components/responses/Error'
+                x-examples:
+                  example-1:
+                    data:
+                      deletedLayers:
+                        - id string
+                      deletedTemplates:
+                        - id string
+                      notDeletedTemplates:
+                        - id string
+                      deletedAnswers:
+                        - id string
+                      teamsRemovedFrom:
+                        - id string
+                      teamsNotRemovedFrom:
+                        - id string
+                      errors:
+                        - id: id string
+                          error: error message
+              examples:
+                example-1:
+                  value:
+                    data:
+                      deletedLayers:
+                        - id string
+                      deletedTemplates:
+                        - id string
+                      notDeletedTemplates:
+                        - id string
+                      deletedAnswers:
+                        - id string
+                      teamsRemovedFrom:
+                        - id string
+                      teamsNotRemovedFrom:
+                        - id string
+                      errors:
+                        - id: id string
+                          error: error message
         '401':
           $ref: '#/components/responses/Error'
       description: Deletes all data held by 3 sided cube for the existing user. Will return a 400 error if user is admin of a team and a 401 error if user is not authorised. Can delete your own info or any users if using microservice token
-    parameters: []
-    get:
-      summary: Get delete info
-      operationId: 'get-delete-:userId'
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  data:
-                    type: object
-                    properties:
-                      uesrTeams:
-                        type: array
-                        items:
-                          type: object
-                      templates:
-                        type: array
-                        items:
-                          type: object
-                      layers:
-                        type: array
-                        items:
-                          type: object
-                      answers:
-                        type: array
-                        items:
-                          type: object
-        '401':
-          $ref: '#/components/responses/Error'
-      description: Returns info on all entities that will be deleted by the delete function
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                areas:
+                  type: array
+                  items:
+                    type: string
   /v1/users/contact:
     post:
       summary: Send Contact Email

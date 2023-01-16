@@ -12,8 +12,9 @@ const router = new Router({
 class UserRouter {
   static async delete(ctx) {
     const { userId } = ctx.request.params;
-    const { userTeams, areas } = ctx.request.query;
-
+    const { userTeams } = ctx.request.query;
+    const {areas} =  ctx.request.body;
+console.log("******", ctx.request.body)
     // **** check that user isn't part of any teams ****
     if (await TeamService.checkUserAdmin(userTeams))
       ctx.throw(
@@ -89,6 +90,6 @@ const isAuthenticatedMiddleware = async (ctx, next) => {
 };
 
 router.get("/:userId", isAuthenticatedMiddleware, getUserData, UserRouter.deletePreflight);
-router.delete("/:userId", isAuthenticatedMiddleware, getUserData, UserRouter.delete);
+router.patch("/:userId", isAuthenticatedMiddleware, getUserData, UserRouter.delete);
 
 module.exports = router;

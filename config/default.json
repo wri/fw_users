@@ -11,6 +11,6 @@
   },
   "sparkpost": {
     "apiKey": "SPARKPOST_API_KEY",
-    "recipient": "tyler@3sidedcube.com"
+    "recipient": "edward@3sidedcube.com"
   }
 }
