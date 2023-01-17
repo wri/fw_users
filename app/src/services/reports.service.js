@@ -4,77 +4,58 @@ const logger = require("logger");
 const loggedInUserService = require("./LoggedInUserService");
 
 class ReportService {
-  static async deleteAllAnswersForUser() {
+  static async deleteAll(userId) {
     try {
       const baseURL = config.get("formsAPI.url");
       const response = await axios.default({
         baseURL,
-        url: `/v3/reports/deleteAllAnswersForUser`,
+        url: `/allUser/${userId}`,
         method: "DELETE",
         headers: {
           authorization: loggedInUserService.token
         }
       });
-      logger.info("Answers deleted with status code", response.status);
+      return response.data;
     } catch (e) {
       logger.info("Failed to delete answers");
     }
-    return Promise.resolve();
   }
 
-  static async getAllTemplates() {
+  static async getAllTemplates(userId) {
     try {
       const baseURL = config.get("formsAPI.url");
       const response = await axios.default({
         baseURL,
-        url: `/v1/reports`,
+        url: `/latestByUserId/${userId}`,
         method: "GET",
         headers: {
           authorization: loggedInUserService.token
         }
       });
       const templates = response.data;
-      logger.info(`Got templates ${{ ...templates }}`);
+      logger.info(`Got templates`);
       return templates && templates.data;
     } catch (e) {
-      logger.info("Failed to get templates");
+      logger.info("Failed to get templates", e);
     }
   }
 
-  static async getTemplateAnswers(templateId) {
+  static async getAllAnswers(userId) {
     try {
       const baseURL = config.get("formsAPI.url");
       const response = await axios.default({
         baseURL,
-        url: `/v1/reports/${templateId.toString()}/answers`,
+        url: `/allUserAnswers/${userId}`,
         method: "GET",
         headers: {
           authorization: loggedInUserService.token
         }
       });
       const answers = response.data;
-      logger.info(`Got template answers ${answers}`);
+      logger.info(`Got answers`);
       return answers && answers.data;
     } catch (e) {
-      logger.info("Failed to get answers", templateId, e);
-    }
-  }
-
-  static async deleteTemplate(templateId) {
-    try {
-      const baseURL = config.get("formsAPI.url");
-      const response = await axios.default({
-        baseURL,
-        url: `/v3/reports/${templateId.toString()}`,
-        method: "DELETE",
-        headers: {
-          authorization: loggedInUserService.token
-        }
-      });
-      logger.info(`Deleted template ${templateId} with status code ${response.status}`);
-      return Promise.resolve();
-    } catch (e) {
-      logger.info("Failed to get answers");
+      logger.info("Failed to get answers", e);
     }
   }
 }
