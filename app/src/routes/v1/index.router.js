@@ -8,23 +8,28 @@ const router = new Router({
 
 class UserRouter {
   static async contact(ctx) {
-    const {loggedUser, platform, queryRelate, query} = ctx.request.body;
+    const { loggedUser, platform, queryRelate, query } = ctx.request.body;
 
-    if(!(platform && query && queryRelate)) ctx.throw(400, "All fields must be completed")
+    if (!(platform && query && queryRelate)) ctx.throw(400, "All fields must be completed");
 
-    const username = await UserService.getUserName(loggedUser.id)
+    const username = await UserService.getUserName(loggedUser.id);
 
-    const response = await SparkpostService.sendMail({fullname: username, email: loggedUser.email, platform, queryRelate, query})
+    const response = await SparkpostService.sendMail({
+      fullname: username,
+      email: loggedUser.email,
+      platform,
+      queryRelate,
+      query
+    });
 
-    ctx.body = {data: response.results.total_accepted_recipients === 1 ? "emailSent" : "emailRejected"};
+    ctx.body = { data: response.results.total_accepted_recipients === 1 ? "emailSent" : "emailRejected" };
     ctx.status = 200;
   }
 
   static getMe(ctx) {
-    const user = JSON.parse(ctx.request.query.loggedUser)
-    ctx.body = {data: user}
+    const user = JSON.parse(ctx.request.query.loggedUser);
+    ctx.body = { data: user };
   }
-
 }
 
 const isAuthenticatedMiddleware = async (ctx, next) => {
@@ -44,6 +49,6 @@ const isAuthenticatedMiddleware = async (ctx, next) => {
 };
 
 router.post("/contact", isAuthenticatedMiddleware, UserRouter.contact);
-router.get("/me", isAuthenticatedMiddleware, UserRouter.getMe)
+router.get("/me", isAuthenticatedMiddleware, UserRouter.getMe);
 
 export default router;

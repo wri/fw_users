@@ -15,7 +15,7 @@ class ReportService {
           authorization: loggedInUserService.token
         }
       });
-      return response.data
+      return response.data;
     } catch (e) {
       logger.info("Failed to delete answers");
     }
@@ -55,10 +55,9 @@ class ReportService {
       logger.info(`Got answers`);
       return answers && answers.data;
     } catch (e) {
-      logger.info("Failed to get answers",e);
+      logger.info("Failed to get answers", e);
     }
   }
-
 }
 
 module.exports = ReportService;

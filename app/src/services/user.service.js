@@ -16,7 +16,7 @@ class UserService {
           authorization: loggedInUserService.token
         }
       });
-      const user = response.data
+      const user = response.data;
       return user && `${user.data.attributes.firstName} ${user.data.attributes.lastName}`;
     } catch (e) {
       logger.info("Failed to fetch username", e);

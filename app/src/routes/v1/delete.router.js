@@ -3,7 +3,7 @@ const AreaService = require("../../services/areas.service");
 const ReportService = require("../../services/reports.service");
 const LayerService = require("../../services/layers.service");
 const Router = require("koa-router");
-const config =require("config");
+const config = require("config");
 
 const router = new Router({
   prefix: "/users/delete"
@@ -13,8 +13,8 @@ class UserRouter {
   static async delete(ctx) {
     const { userId } = ctx.request.params;
     const { userTeams } = ctx.request.query;
-    const {areas} =  ctx.request.body;
-console.log("******", ctx.request.body)
+    const { areas } = ctx.request.body;
+    console.log("******", ctx.request.body);
     // **** check that user isn't part of any teams ****
     if (await TeamService.checkUserAdmin(userTeams))
       ctx.throw(
@@ -22,7 +22,7 @@ console.log("******", ctx.request.body)
         "Cannot delete a team administrator. Please reassign all team administrators before deleting account."
       );
 
-/*     // **** remove all area links to teams and templates ****
+    /*     // **** remove all area links to teams and templates ****
     areas.forEach(area => {
       AreaService.deleteTemplateRelations(area.id);
       AreaService.deleteTeamRelations(area.id);
@@ -37,15 +37,17 @@ console.log("******", ctx.request.body)
     // remove user from their teams (don't just leave team)
     const deletedTeams = await TeamService.removeAll(userId);
 
-    ctx.body = {data: {
-      deletedLayers,
-      deletedTemplates: deletedReports.deletedTemplates,
-      notDeletedTemplates: deletedReports.undeletedTemplates,
-      deletedAnswers: deletedReports.deletedAnswers,
-      teamsRemovedFrom: deletedTeams.teamsDeletedFrom,
-      teamsNotRemovedFrom: deletedTeams.teamsNotDeletedFrom,
-      errors: [...deletedReports.errors, ...deletedTeams.errors]
-    }};
+    ctx.body = {
+      data: {
+        deletedLayers,
+        deletedTemplates: deletedReports.deletedTemplates,
+        notDeletedTemplates: deletedReports.undeletedTemplates,
+        deletedAnswers: deletedReports.deletedAnswers,
+        teamsRemovedFrom: deletedTeams.teamsDeletedFrom,
+        teamsNotRemovedFrom: deletedTeams.teamsNotDeletedFrom,
+        errors: [...deletedReports.errors, ...deletedTeams.errors]
+      }
+    };
     ctx.status = 200;
   }
 
@@ -58,7 +60,7 @@ console.log("******", ctx.request.body)
 }
 
 const getUserData = async (ctx, next) => {
-  const {userId} = ctx.request.params;
+  const { userId } = ctx.request.params;
   const userTeams = await TeamService.getUserTeams(userId);
   const templates = await ReportService.getAllTemplates(userId);
   const layers = await LayerService.getAllLayers(userId);
@@ -80,7 +82,7 @@ const isAuthenticatedMiddleware = async (ctx, next) => {
     ...body.loggedUser
   };
 
-  const microserviceToken = config.get("service.token")
+  const microserviceToken = config.get("service.token");
 
   if (!user || !user.id || (user.id !== params.userId && microserviceToken !== query.token)) {
     ctx.throw(401, "Unauthorized");
