@@ -4,7 +4,6 @@ const logger = require("logger");
 const loggedInUserService = require("./LoggedInUserService");
 
 class LayerService {
-
   static async getAllLayers(userId) {
     try {
       const baseURL = config.get("layersAPI.url");
