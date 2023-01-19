@@ -158,6 +158,11 @@ paths:
                   type: array
                   items:
                     type: string
+            examples:
+              example-1:
+                value:
+                  areas:
+                    - 62a9c03d378080001b0d4e22
   /v1/users/contact:
     post:
       summary: Send Contact Email
