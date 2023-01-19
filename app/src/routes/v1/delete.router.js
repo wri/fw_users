@@ -22,11 +22,11 @@ class UserRouter {
         "Cannot delete a team administrator. Please reassign all team administrators before deleting account."
       );
 
-    /*     // **** remove all area links to teams and templates ****
+      // **** remove all area links to teams and templates ****
     areas.forEach(area => {
-      AreaService.deleteTemplateRelations(area.id);
-      AreaService.deleteTeamRelations(area.id);
-    }); */
+      AreaService.deleteTemplateRelations(area);
+      AreaService.deleteTeamRelations(area);
+    });
 
     // **** remove all reports and templates****
     const deletedReports = await ReportService.deleteAll(userId);
