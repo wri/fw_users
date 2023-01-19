@@ -87,7 +87,7 @@ data "template_file" "container_definition" {
     redis_endpoint = data.terraform_remote_state.core.outputs.redis_replication_group_primary_endpoint_address
     AUTH_URL = var.AUTH_URL
     FORMS_API_URL = "https://${data.terraform_remote_state.fw_core.outputs.public_url}/v3/gfw/templates"
-    AREAS_API_URL = "https://${data.terraform_remote_state.fw_core.outputs.public_url}/v3/gfw/areas"
+    AREAS_API_URL = "https://${data.terraform_remote_state.fw_core.outputs.public_url}/v3/gfw/arearelations"
     LAYERS_API_URL = "https://${data.terraform_remote_state.fw_core.outputs.public_url}/v3/contextual-layer"
     TEAMS_API_URL = "https://${data.terraform_remote_state.fw_core.outputs.public_url}/v3/gfw/teams"
     SPARKPOST_API_KEY       = module.SPARKPOST_API_KEY.secret_arn

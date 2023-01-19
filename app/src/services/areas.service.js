@@ -31,7 +31,7 @@ class AreaService {
       const baseURL = config.get("areasAPI.url");
       const response = await axios.default({
         baseURL,
-        url: `/${areaId}/templates`,
+        url: `/templates/${areaId}`,
         method: "DELETE",
         headers: {
           authorization: loggedInUserService.token
@@ -51,7 +51,7 @@ class AreaService {
       const baseURL = config.get("areasAPI.url");
       const response = await axios.default({
         baseURL,
-        url: `/${areaId}/teams`,
+        url: `/teams/${areaId}`,
         method: "DELETE",
         headers: {
           authorization: loggedInUserService.token
