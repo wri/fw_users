@@ -14,7 +14,7 @@ class UserRouter {
     const { userId } = ctx.request.params;
     const { userTeams } = ctx.request.query;
     const { areas } = ctx.request.body;
-    console.log("******", ctx.request.body);
+    if(!areas) ctx.throw(400, "Please provide an array of area ids to delete")
     // **** check that user isn't part of any teams ****
     if (await TeamService.checkUserAdmin(userTeams))
       ctx.throw(
