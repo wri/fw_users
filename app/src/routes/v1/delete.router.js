@@ -83,7 +83,7 @@ const isAuthenticatedMiddleware = async (ctx, next) => {
   };
 
   const microserviceToken = config.get("service.token");
-
+  console.log(microserviceToken, query.token)
   if (!user || !user.id || (user.id !== params.userId && microserviceToken !== query.token)) {
     ctx.throw(401, "Unauthorized");
     return;
