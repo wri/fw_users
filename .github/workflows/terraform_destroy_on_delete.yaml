@@ -18,6 +18,7 @@ jobs:
         AWS_ACCESS_KEY_ID: ${{ secrets.aws_key_production }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.aws_secret_production }}
         AWS_REGION: ${{ secrets.aws_region_production }}
+        SPARKPOST_API_KEY: ${{ secrets.SPARKPOST_API_KEY }}
       run: ./scripts/delete_workspace -f -g "no_sha_awailable"
     - name: Destroy state and delete staging workspace
       if: contains(github.event.ref_type, 'branch') &&  github.event.ref == 'refs/heads/staging'
@@ -26,6 +27,7 @@ jobs:
         AWS_ACCESS_KEY_ID: ${{ secrets.aws_key_staging }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.aws_secret_staging }}
         AWS_REGION: ${{ secrets.aws_region_staging }}
+        SPARKPOST_API_KEY: ${{ secrets.SPARKPOST_API_KEY }}
       run: ./scripts/delete_workspace -f -g "no_sha_awailable"
     - name: Destroy state and delete dev workspace
       if: contains(github.event.ref_type, 'branch') &&  github.event.ref == 'refs/heads/dev'
@@ -34,4 +36,5 @@ jobs:
         AWS_ACCESS_KEY_ID: ${{ secrets.aws_key_dev }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.aws_secret_dev }}
         AWS_REGION: ${{ secrets.aws_region_Dev }}
+        SPARKPOST_API_KEY: ${{ secrets.SPARKPOST_API_KEY }}
       run: ./scripts/delete_workspace -f -g "no_sha_awailable"

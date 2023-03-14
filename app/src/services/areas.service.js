@@ -10,14 +10,14 @@ class AreaService {
       const baseURL = config.get("areasAPI.url");
       const response = await axios.default({
         baseURL,
-        url: `/area`,
+        url: `/user`,
         method: "GET",
         headers: {
           authorization: loggedInUserService.token
         }
       });
       const areas = response.data;
-      logger.info("Got areas", areas);
+      logger.info("Got areas");
       return areas && areas.data;
     } catch (e) {
       logger.error("Error while fetching areas", e);
@@ -31,7 +31,7 @@ class AreaService {
       const baseURL = config.get("areasAPI.url");
       const response = await axios.default({
         baseURL,
-        url: `/area/${areaId}/templates`,
+        url: `/templates/deleteAllForArea/${areaId}`,
         method: "DELETE",
         headers: {
           authorization: loggedInUserService.token
@@ -51,7 +51,7 @@ class AreaService {
       const baseURL = config.get("areasAPI.url");
       const response = await axios.default({
         baseURL,
-        url: `/area/${areaId}/teams`,
+        url: `/teams/deleteAllForArea/${areaId}`,
         method: "DELETE",
         headers: {
           authorization: loggedInUserService.token

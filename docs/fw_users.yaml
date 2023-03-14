@@ -6,26 +6,260 @@ info:
   description: Microservice to handle user specific requests
 servers:
   - description: Dev
-    url: 'https://dev-fw-api.globalforestwatch.org/v1/users'
-  - url: 'https://staging-fw-api.globalforestwatch.org/v1/users'
+    url: 'https://dev-fw-api.globalforestwatch.org'
+  - url: 'https://staging-fw-api.globalforestwatch.org'
     description: Staging
-  - url: 'https://api.resourcewatch.org/v1/users'
+  - url: 'https://api.resourcewatch.org'
     description: Production
-  - url: 'http://localhost:3001/v1/users'
+  - url: 'http://localhost:3001'
     description: Local
 paths:
-  /:
-    delete:
-      summary: Delete Current User
-      operationId: delete-v1-users
+  '/v1/users/delete/:userId':
+    parameters: []
+    get:
+      summary: Get delete info
+      operationId: 'get-delete-:userId'
       responses:
-        '204':
-          description: No Content
-        '400':
-          $ref: '#/components/responses/Error'
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      uesrTeams:
+                        type: array
+                        items:
+                          type: object
+                      templates:
+                        type: array
+                        items:
+                          type: object
+                      layers:
+                        type: array
+                        items:
+                          type: object
+                      answers:
+                        type: array
+                        items:
+                          type: object
+              examples:
+                example-1:
+                  value:
+                    data:
+                      uesrTeams:
+                        - {}
+                      templates:
+                        - {}
+                      layers:
+                        - {}
+                      answers:
+                        - {}
         '401':
           $ref: '#/components/responses/Error'
-      description: Deletes all data held by 3 sided cube for the existing user. Will return a 400 error if user is admin of a team and a 401 error if user is not authorised
+      description: Returns info on all entities that will be deleted by the delete function
+    patch:
+      summary: Delete user info
+      operationId: 'patch-v1-users-delete-:userId'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      deletedLayers:
+                        type: array
+                        items:
+                          type: string
+                      deletedTemplates:
+                        type: array
+                        items:
+                          type: string
+                      notDeletedTemplates:
+                        type: array
+                        items:
+                          type: string
+                      deletedAnswers:
+                        type: array
+                        items:
+                          type: string
+                      teamsRemovedFrom:
+                        type: array
+                        items:
+                          type: string
+                      teamsNotRemovedFrom:
+                        type: array
+                        items:
+                          type: string
+                      errors:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                            error:
+                              type: string
+                x-examples:
+                  example-1:
+                    data:
+                      deletedLayers:
+                        - id string
+                      deletedTemplates:
+                        - id string
+                      notDeletedTemplates:
+                        - id string
+                      deletedAnswers:
+                        - id string
+                      teamsRemovedFrom:
+                        - id string
+                      teamsNotRemovedFrom:
+                        - id string
+                      errors:
+                        - id: id string
+                          error: error message
+              examples:
+                example-1:
+                  value:
+                    data:
+                      deletedLayers:
+                        - id string
+                      deletedTemplates:
+                        - id string
+                      notDeletedTemplates:
+                        - id string
+                      deletedAnswers:
+                        - id string
+                      teamsRemovedFrom:
+                        - id string
+                      teamsNotRemovedFrom:
+                        - id string
+                      errors:
+                        - id: id string
+                          error: error message
+        '401':
+          $ref: '#/components/responses/Error'
+      description: Deletes all data held by 3 sided cube for the existing user. Will return a 400 error if user is admin of a team and a 401 error if user is not authorised. Can delete your own info or any users if using microservice token
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                areas:
+                  type: array
+                  items:
+                    type: string
+            examples:
+              example-1:
+                value:
+                  areas:
+                    - 62a9c03d378080001b0d4e22
+  /v1/users/contact:
+    post:
+      summary: Send Contact Email
+      operationId: post-contact
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: string
+        '401':
+          $ref: '#/components/responses/Error'
+      description: Sends an email to a prearranged email address containing help form info
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                platform:
+                  type: string
+                queryRelate:
+                  type: string
+                query:
+                  type: string
+    parameters: []
+  /v1/users/me:
+    get:
+      summary: Get user info
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      _id:
+                        type: string
+                      email:
+                        type: string
+                      provider:
+                        type: string
+                      role:
+                        type: string
+                      extraUserData:
+                        type: object
+                        properties:
+                          apps:
+                            type: array
+                            items:
+                              type: string
+                      createdAt:
+                        type: string
+                      updatedAt:
+                        type: string
+                x-examples:
+                  example-1:
+                    data:
+                      id: 6242c57a880445001a46c499
+                      _id: 6242c57a880445001a46c499
+                      email: cubegfw@gmail.com
+                      provider: local
+                      role: USER
+                      extraUserData:
+                        apps:
+                          - gfw
+                      createdAt: '2022-03-29T08:38:19.000Z'
+                      updatedAt: '2022-12-13T18:28:40.000Z'
+              examples:
+                User info:
+                  value:
+                    data:
+                      id: 6242c57a880445001a46c499
+                      _id: 6242c57a880445001a46c499
+                      email: cubegfw@gmail.com
+                      provider: local
+                      role: USER
+                      extraUserData:
+                        apps:
+                          - gfw
+                      createdAt: '2022-03-29T08:38:19.000Z'
+                      updatedAt: '2022-12-13T18:28:40.000Z'
+        '401':
+          $ref: '#/components/responses/Error'
+      operationId: get-me
+      description: Get current user info
     parameters: []
 components:
   schemas: {}

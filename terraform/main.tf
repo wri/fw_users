@@ -46,8 +46,14 @@ module "fargate_autoscaling" {
   task_execution_role_policies = [
     data.terraform_remote_state.fw_core.outputs.gfw_data_api_key_secret_policy_arn,
     data.terraform_remote_state.core.outputs.document_db_secrets_policy_arn,
+    data.terraform_remote_state.fw_core.outputs.microservice_token_secret_policy_arn,
+    module.SPARKPOST_API_KEY.read_policy_arn,
   ]
   container_definition = data.template_file.container_definition.rendered
+
+  depends_on = [
+    module.SPARKPOST_API_KEY
+  ]
 
   # Listener rule inputs
   lb_target_group_arn = module.fargate_autoscaling.lb_target_group_arn
@@ -58,7 +64,12 @@ module "fargate_autoscaling" {
   priority = 9 // TODO: must be unique for across all services
 }
 
-
+module "SPARKPOST_API_KEY" {
+  source        = "git::https://github.com/wri/gfw-terraform-modules.git//terraform/modules/secrets?ref=v0.5.1"
+  project       = var.project_prefix
+  name          = "${var.project_prefix}-SPARKPOST_API_KEY"
+  secret_string = var.SPARKPOST_API_KEY
+}
 
 data "template_file" "container_definition" {
   template = file("${path.root}/templates/container_definition.json.tmpl")
@@ -71,13 +82,15 @@ data "template_file" "container_definition" {
     log_group = aws_cloudwatch_log_group.default.name
     log_level         = var.log_level
     db_secret_arn = data.terraform_remote_state.core.outputs.document_db_secrets_arn
+    microservice_token_secret  = data.terraform_remote_state.fw_core.outputs.microservice_token_secret_arn
     data_bucket = data.terraform_remote_state.fw_core.outputs.data_bucket
     redis_endpoint = data.terraform_remote_state.core.outputs.redis_replication_group_primary_endpoint_address
     AUTH_URL = var.AUTH_URL
-    FORMS_API_URL = "https://${data.terraform_remote_state.fw_core.outputs.public_url}"
-    AREAS_API_URL = "https://${data.terraform_remote_state.fw_core.outputs.public_url}/v3/forest-watcher"
-    LAYERS_API_URL = "https://${data.terraform_remote_state.fw_core.outputs.public_url}"
-    TEAMS_API_URL = "https://${data.terraform_remote_state.fw_core.outputs.public_url}/v3"
+    FORMS_API_URL = "https://${data.terraform_remote_state.fw_core.outputs.public_url}/v3/gfw/templates"
+    AREAS_API_URL = "https://${data.terraform_remote_state.fw_core.outputs.public_url}/v3/gfw/arearelations"
+    LAYERS_API_URL = "https://${data.terraform_remote_state.fw_core.outputs.public_url}/v3/contextual-layer"
+    TEAMS_API_URL = "https://${data.terraform_remote_state.fw_core.outputs.public_url}/v3/gfw/teams"
+    SPARKPOST_API_KEY       = module.SPARKPOST_API_KEY.secret_arn
   }
 
 }

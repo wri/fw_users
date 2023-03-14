@@ -40,7 +40,8 @@ class LoggedInUserService {
       if (["GET", "DELETE"].includes(ctx.request.method.toUpperCase())) {
         ctx.request.query = {
           ...ctx.request.query,
-          loggedUser: JSON.stringify(response.data)
+          loggedUser: JSON.stringify(response.data),
+          token: ctx.request.header.authorization
         };
       } else if (["POST", "PATCH", "PUT"].includes(ctx.request.method.toUpperCase())) {
         ctx.request.body.loggedUser = response.data;

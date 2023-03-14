@@ -1,11 +1,16 @@
 {
   "service": {
-    "port": "3001"
+    "port": "3001",
+    "token": "MICROSERVICE_TOKEN"
   },
   "logger": {
     "name": "forest-watcher",
     "level": "debug",
     "toFile": false,
     "dirLogFile": null
+  },
+  "sparkpost": {
+    "apiKey": "SPARKPOST_API_KEY",
+    "recipient": "forestwatcher@wri.org"
   }
 }

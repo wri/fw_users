@@ -64,3 +64,6 @@ variable "AUTH_URL" {
   type    = string
   default = "https://api.resourcewatch.org"
 }
+variable "SPARKPOST_API_KEY" {
+  type = string
+}
