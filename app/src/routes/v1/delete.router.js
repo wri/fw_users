@@ -29,7 +29,7 @@ class UserRouter {
     });
 
     // **** remove all reports and templates****
-    const deletedReports = await ReportService.deleteAll(userId);
+    //const deletedReports = await ReportService.deleteAll(userId);
 
     // remove all user's layers
     const deletedLayers = await LayerService.deleteAllLayers(userId);
