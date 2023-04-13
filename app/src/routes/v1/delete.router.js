@@ -14,7 +14,7 @@ class UserRouter {
     const { userId } = ctx.request.params;
     const { userTeams } = ctx.request.query;
     const { areas } = ctx.request.body;
-    if(!areas) ctx.throw(400, "Please provide an array of area ids to delete")
+    if (!areas) ctx.throw(400, "Please provide an array of area ids to delete");
     // **** check that user isn't part of any teams ****
     if (await TeamService.checkUserAdmin(userTeams))
       ctx.throw(
@@ -22,7 +22,7 @@ class UserRouter {
         "Cannot delete a team administrator. Please reassign all team administrators before deleting account."
       );
 
-      // **** remove all area links to teams and templates ****
+    // **** remove all area links to teams and templates ****
     areas.forEach(area => {
       AreaService.deleteTemplateRelations(area);
       AreaService.deleteTeamRelations(area);
