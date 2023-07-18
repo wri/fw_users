@@ -23,6 +23,6 @@
   },
   "sparkpost": {
     "apiKey": "SPARKPOST_API_KEY",
-    "recipient": "ginny@3sidedcube.com"
+    "recipient": "forestwatcher@wri.org"
   }
 }
